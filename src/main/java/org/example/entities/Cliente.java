@@ -70,7 +70,6 @@ public class Cliente implements Serializable {
         this.cliCpf = cliCpf;
     }
 
-    //novo
 
     public List<Endereco> getEnderecos() {
         return enderecos;

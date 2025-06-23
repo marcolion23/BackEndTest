@@ -34,18 +34,18 @@ public class ClienteResourceTest {
     @BeforeEach
     void setUp() {
         clienteDto = new ClienteDto();
-        clienteDto.setCliNome("João");
-        clienteDto.setCliCpf("12345678900");
-        clienteDto.setEndRua("Rua 1");
-        clienteDto.setEndNumero("123");
-        clienteDto.setEndCidade("Cidade X");
-        clienteDto.setEndCep("12345-678");
-        clienteDto.setEndEstado("PR");
-        clienteDto.setConCelular("99999-9999");
-        clienteDto.setConTelefoneComercial("3333-3333");
-        clienteDto.setConEmail("joao@email.com");
+        clienteDto.setCliNome("GameOnTeste");
+        clienteDto.setCliCpf("12332112332");
+        clienteDto.setEndRua("Rua Sistema Gamer");
+        clienteDto.setEndNumero("195");
+        clienteDto.setEndCidade("Cidade Gamer");
+        clienteDto.setEndCep("12345-122");
+        clienteDto.setEndEstado("RJ");
+        clienteDto.setConCelular("98457-2314");
+        clienteDto.setConTelefoneComercial("3333-4444");
+        clienteDto.setConEmail("GameOnTeste@email.com");
 
-        cliente = new Cliente(1L, "João", "12345678900");
+        cliente = new Cliente(1L, "GameOnTeste", "12332112332");
     }
 
     @Test
@@ -55,8 +55,8 @@ public class ClienteResourceTest {
 
         mockMvc.perform(get("/clientes"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].cliNome").value("João"))
-                .andExpect(jsonPath("$[0].cliCpf").value("12345678900"));
+                .andExpect(jsonPath("$[0].cliNome").value("GameOntTeste"))
+                .andExpect(jsonPath("$[0].cliCpf").value("12332112332"));
     }
 
     @Test
@@ -66,7 +66,7 @@ public class ClienteResourceTest {
 
         mockMvc.perform(get("/clientes/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.cliNome").value("João"));
+                .andExpect(jsonPath("$.cliNome").value("GameOnTeste"));
     }
 
     @Test

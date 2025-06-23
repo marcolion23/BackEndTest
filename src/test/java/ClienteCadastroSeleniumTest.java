@@ -27,22 +27,22 @@ public class ClienteCadastroSeleniumTest {
 
     @Test
     public void deveCadastrarClienteComSucesso() throws InterruptedException {
-        driver.findElement(By.id("cliNome")).sendKeys("Teste Caixa Preta");
-        driver.findElement(By.id("cliCpf")).sendKeys("11122233344");
-        driver.findElement(By.id("endRua")).sendKeys("Rua 1");
-        driver.findElement(By.id("endNumero")).sendKeys("10");
-        driver.findElement(By.id("endCidade")).sendKeys("Cidade XPTO");
-        driver.findElement(By.id("endCep")).sendKeys("12345-000");
-        driver.findElement(By.id("endEstado")).sendKeys("SP");
-        driver.findElement(By.id("conCelular")).sendKeys("99999-9999");
+        driver.findElement(By.id("cliNome")).sendKeys("GameOnTeste");
+        driver.findElement(By.id("cliCpf")).sendKeys("12332112332");
+        driver.findElement(By.id("endRua")).sendKeys("Rua Sistema Gamer");
+        driver.findElement(By.id("endNumero")).sendKeys("195");
+        driver.findElement(By.id("endCidade")).sendKeys("Cidade Gamer");
+        driver.findElement(By.id("endCep")).sendKeys("12345-122");
+        driver.findElement(By.id("endEstado")).sendKeys("RJ");
+        driver.findElement(By.id("conCelular")).sendKeys("98457-2314");
         driver.findElement(By.id("conTelefoneComercial")).sendKeys("3333-4444");
-        driver.findElement(By.id("conEmail")).sendKeys("teste@caixapreta.com");
+        driver.findElement(By.id("conEmail")).sendKeys("GameOnTeste@email.com");
 
         driver.findElement(By.id("btnSalvar")).click();
 
         Thread.sleep(3000); // use WebDriverWait se possível
 
-        WebElement mensagem = driver.findElement(By.id("mensagemSucesso"));
+        WebElement mensagem = driver.findElement(By.id("Aprovado!!"));
         assertTrue(mensagem.isDisplayed());
     }
 }
