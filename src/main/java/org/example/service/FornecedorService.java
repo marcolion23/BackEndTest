@@ -1,6 +1,6 @@
 package org.example.service;
 
-import org.example.Dto.FornecedorDto;
+import org.example.dto.FornecedorDto;
 import org.example.entities.Fornecedor;
 import org.example.entities.Contato;
 import org.example.entities.Endereco;
@@ -62,6 +62,7 @@ public class FornecedorService {
             //Assuindo que ha apenas um endereço por fornecedor
             endereco.setEndRua(objDto.getEndRua());
             endereco.setEndNumero(objDto.getEndNumero());
+            endereco.setEndBairro(objDto.getEndBairro());
             endereco.setEndCidade(objDto.getEndCidade());
             endereco.setEndCep(objDto.getEndCep());
             endereco.setEndEstado(objDto.getEndEstado());
@@ -71,7 +72,6 @@ public class FornecedorService {
 
             //Assumindo que ha apenas um contato por fornecedor
             contato.setConCelular(objDto.getConCelular());
-            contato.setConTelefoneComercial(objDto.getConTelefoneComercial());
             contato.setConEmail(objDto.getConEmail());
 
             //Salva as alterações
@@ -94,11 +94,15 @@ public class FornecedorService {
         Fornecedor fornec = new Fornecedor(null, objDto.getForNomeFantasia(), objDto.getForRazaoSocial(), objDto.getForCnpj());
 
         Endereco ender = new Endereco(null, fornec, objDto.getEndRua(), objDto.getEndNumero(),
-                objDto.getEndCidade(), objDto.getEndCep(),
+                objDto.getEndBairro() ,objDto.getEndCidade(), objDto.getEndCep(),
                 objDto.getEndEstado());
 
-        Contato contato = new Contato(null, fornec, objDto.getConCelular(), objDto.getConTelefoneComercial(),
-                objDto.getConEmail());
+        Contato contato = new Contato(
+                null,
+                objDto.getConCelular(),
+                fornec,
+                objDto.getConEmail()
+        );
 
         fornec.getEnderecos().add(ender);
         fornec.getContatos().add(contato);
@@ -109,24 +113,24 @@ public class FornecedorService {
     public FornecedorDto toNewDto(Fornecedor obj) {
         FornecedorDto dto = new FornecedorDto();
 
-// Mapeie os atributos comuns entre Fornecedor e FornecedorNewDTO
+        // Mapeie os atributos comuns entre Fornecedor e FornecedorNewDTO
         dto.setForId(obj.getForId());
         dto.setForNomeFantasia(obj.getForNomeFantasia());
         dto.setForRazaoSocial(obj.getForRazaoSocial());
         dto.setForCnpj(obj.getForCnpj());
 
-// Atributos específicos de Endereco
+        // Atributos específicos de Endereco
         Endereco endereco = obj.getEnderecos().get(0);
         dto.setEndRua(endereco.getEndRua());
         dto.setEndNumero(endereco.getEndNumero());
+        dto.setEndBairro(endereco.getEndBairro());
         dto.setEndCidade(endereco.getEndCidade());
         dto.setEndCep(endereco.getEndCep());
         dto.setEndEstado(endereco.getEndEstado());
 
-// Atributos específicos de Contato
+        // Atributos específicos de Contato
         Contato contato = obj.getContatos().get(0);
         dto.setConCelular(contato.getConCelular());
-        dto.setConTelefoneComercial(contato.getConTelefoneComercial());
         dto.setConEmail(contato.getConEmail());
 
         return dto;

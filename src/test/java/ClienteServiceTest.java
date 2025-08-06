@@ -1,4 +1,4 @@
-import org.example.Dto.ClienteDto;
+import org.example.dto.ClienteDto;
 import org.example.entities.Cliente;
 import org.example.entities.Contato;
 import org.example.entities.Endereco;

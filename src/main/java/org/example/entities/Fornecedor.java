@@ -1,5 +1,6 @@
 package org.example.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.br.CNPJ;
 
 import javax.persistence.*;
@@ -17,10 +18,17 @@ public class Fornecedor implements Serializable {
     @Column(name = "FOR_ID")
     private Long forId;
 
-    @OneToMany(mappedBy = "endCliente", cascade = CascadeType.ALL)
+    // Relacionamento com Produto
+    @OneToMany(mappedBy = "fornecedor", cascade = CascadeType.ALL)
+    @JsonManagedReference  // controla o lado "pai" da relação
+    private List<Produto> produtos = new ArrayList<>();
+
+    // Relacionamento com Endereço
+    @OneToMany(mappedBy = "endFornecedor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Endereco> enderecos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "conCliente", cascade = CascadeType.ALL)
+    // Relacionamento com Contato
+    @OneToMany(mappedBy = "conFornecedor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Contato> contatos = new ArrayList<>();
 
     @NotBlank(message = "Nome Fantasia é obrigatório")
@@ -30,7 +38,7 @@ public class Fornecedor implements Serializable {
 
     @NotBlank(message = "CNPJ é obrigatório")
     @CNPJ(message = "CNPJ inválido")
-    @Column(name = "FOR_CNPJ", unique = true, length = 18)
+    @Column(name = "FOR_CNPJ", nullable = false, unique = true, length = 20)
     private String forCnpj;
 
     @NotBlank(message = "Razão social é obrigatório")
@@ -41,7 +49,7 @@ public class Fornecedor implements Serializable {
     public Fornecedor() {
     }
 
-    public Fornecedor(Object o, String forNomeFantasia, String forCnpj, String forRazaoSocial) {
+    public Fornecedor(Long forId, String forNomeFantasia, String forCnpj, String forRazaoSocial) {
         this.forId = forId;
         this.forNomeFantasia = forNomeFantasia;
         this.forCnpj = forCnpj;
@@ -54,6 +62,30 @@ public class Fornecedor implements Serializable {
 
     public void setForId(Long forId) {
         this.forId = forId;
+    }
+
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
+    }
+
+    public List<Endereco> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
+    }
+
+    public List<Contato> getContatos() {
+        return contatos;
+    }
+
+    public void setContatos(List<Contato> contatos) {
+        this.contatos = contatos;
     }
 
     public String getForNomeFantasia() {
@@ -78,21 +110,5 @@ public class Fornecedor implements Serializable {
 
     public void setForRazaoSocial(String forRazaoSocial) {
         this.forRazaoSocial = forRazaoSocial;
-    }
-
-    public List<Endereco> getEnderecos() {
-        return enderecos;
-    }
-
-    public void setEnderecos(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
-    }
-
-    public List<Contato> getContatos() {
-        return contatos;
-    }
-
-    public void setContatos(List<Contato> contatos) {
-        this.contatos = contatos;
     }
 }

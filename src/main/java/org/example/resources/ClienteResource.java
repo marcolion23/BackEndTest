@@ -1,6 +1,6 @@
 package org.example.resources;
 
-import org.example.Dto.ClienteDto;
+import org.example.dto.ClienteDto;
 import org.example.entities.Cliente;
 import org.example.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;

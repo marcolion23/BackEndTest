@@ -51,5 +51,4 @@ public class ContatoResource {
         contatoService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
 }

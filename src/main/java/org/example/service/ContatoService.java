@@ -34,7 +34,6 @@ public class ContatoService {
             Contato contatoSistema = optionalContato.get();
             contatoSistema.setConCelular(contato.getConCelular());
             contatoSistema.setConEmail(contato.getConEmail());
-            contatoSistema.setConTelefoneComercial(contato.getConTelefoneComercial());
             repository.save(contatoSistema);
             return true;
         }

@@ -13,25 +13,25 @@ public class FormaPagamento implements Serializable {
     @Column(name = "FPG_ID")
     private Long fpgId;
 
+    @NotBlank(message = "Tipo de pagamento é obrigatório")
+    @Pattern(regexp = "^(Credito|Debito|Pix|Boleto)$", message = "Tipo deve ser: Credito, Debito, Pix ou Boleto")
+    @Column(name = "FPG_TIPO", nullable = false, length = 10)
+    private String fpgTipo;
+
     @NotBlank(message = "Descrição é obrigatório")
     @Size(min = 2, max = 100, message = "Descrição inválida")
     @Column(name = "FPG_DESCRICAO", nullable = false)
     private String fpgDescricao;
 
-    @NotBlank(message = "Status é obrigatório")
-    @Size(min = 1, max = 1, message = "Status inválido (use S ou N)")
-    @Pattern(regexp = "[SN]", message = "Status inválido (use S ou N)")
-    @Column(name = "FPG_ATIVO", nullable = false)
-    private String fpgAtivo;
-
-    @NotNull(message = "Permite Parcelamento é obrigatório")
+    @NotNull(message = "Campo 'Permite Parcelamento' é obrigatório")
     @Column(name = "FPG_PERMITE_PARCELAMENTO", nullable = false)
     private Boolean fpgPermiteParcelamento;
 
-    @NotNull(message = "Número máximo de parcelas é obrigatório")
-    @Min(value = 1, message = "Número máximo de parcelas deve ser pelo menos 1")
-    @Column(name = "FPG_NUMERO_MAXIMO_PARCELAS", nullable = false)
-    private Integer fpgNumeroMaximoParcelas;
+    @NotNull(message = "Número de parcelas deve ser no mínimo 1")
+    @Min(value = 1, message = "Número de parcelas deve ser no mínimo 1")
+    @Max(value = 12, message = "Número de parcelas não pode exceder 12")
+    @Column(name = "FPG_NUM_MAX_PARCELAS", nullable = false)
+    private Integer fpgNumMaxParcelas;
 
     @NotNull(message = "Taxa adicional é obrigatória")
     @DecimalMin(value = "0.00", message = "Taxa adicional não pode ser negativa")
@@ -41,22 +41,31 @@ public class FormaPagamento implements Serializable {
     public FormaPagamento() {
     }
 
-    public FormaPagamento(Long fpgId, String fpgDescricao, String fpgAtivo, Boolean fpgPermiteParcelamento, Integer fpgNumeroMaximoParcelas, BigDecimal fpgTaxaAdicional) {
+    public FormaPagamento(Long fpgId, String fpgTipo, String fpgDescricao, Boolean fpgPermiteParcelamento, Integer fpgNumMaxParcelas, BigDecimal fpgTaxaAdicional) {
         this.fpgId = fpgId;
+        this.fpgTipo = fpgTipo;
         this.fpgDescricao = fpgDescricao;
-        this.fpgAtivo = fpgAtivo;
         this.fpgPermiteParcelamento = fpgPermiteParcelamento;
-        this.fpgNumeroMaximoParcelas = fpgNumeroMaximoParcelas;
+        this.fpgNumMaxParcelas = fpgNumMaxParcelas;
         this.fpgTaxaAdicional = fpgTaxaAdicional;
     }
 
     // Getters e Setters (mantidos como no original)
+
     public Long getFpgId() {
         return fpgId;
     }
 
     public void setFpgId(Long fpgId) {
         this.fpgId = fpgId;
+    }
+
+    public String getFpgTipo() {
+        return fpgTipo;
+    }
+
+    public void setFpgTipo(String fpgTipo) {
+        this.fpgTipo = fpgTipo;
     }
 
     public String getFpgDescricao() {
@@ -67,14 +76,6 @@ public class FormaPagamento implements Serializable {
         this.fpgDescricao = fpgDescricao;
     }
 
-    public String getFpgAtivo() {
-        return fpgAtivo;
-    }
-
-    public void setFpgAtivo(String fpgAtivo) {
-        this.fpgAtivo = fpgAtivo;
-    }
-
     public Boolean getFpgPermiteParcelamento() {
         return fpgPermiteParcelamento;
     }
@@ -83,12 +84,12 @@ public class FormaPagamento implements Serializable {
         this.fpgPermiteParcelamento = fpgPermiteParcelamento;
     }
 
-    public Integer getFpgNumeroMaximoParcelas() {
-        return fpgNumeroMaximoParcelas;
+    public Integer getFpgNumMaxParcelas() {
+        return fpgNumMaxParcelas;
     }
 
-    public void setFpgNumeroMaximoParcelas(Integer fpgNumeroMaximoParcelas) {
-        this.fpgNumeroMaximoParcelas = fpgNumeroMaximoParcelas;
+    public void setFpgNumMaxParcelas(Integer fpgNumMaxParcelas) {
+        this.fpgNumMaxParcelas = fpgNumMaxParcelas;
     }
 
     public BigDecimal getFpgTaxaAdicional() {

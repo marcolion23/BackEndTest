@@ -1,5 +1,7 @@
 package org.example.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -14,6 +16,11 @@ public class Produto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PRO_ID")
     private Long proId;
+
+    @ManyToOne
+    @JoinColumn(name = "FOR_ID")
+    @JsonBackReference
+    private Fornecedor fornecedor;
 
     @NotBlank(message = "Nome é obrigatório")
     @Size(max = 100, message = "Nome inválido, máximo 100 caracterias")
@@ -55,11 +62,6 @@ public class Produto implements Serializable {
     @Column(name = "PRO_MARCA", nullable = false, length = 100)
     private String proMarca;
 
-    @NotBlank(message = "Unidade de Medida é obrigatório")
-    @Size(max = 20, message = "Inválido")
-    @Column(name = "PRO_UNIDADE_MEDIDA", nullable = false, length = 20)
-    private String proUnidadeMedida;
-
     @NotBlank(message = "obrigatório")
     @Size(message = "Inválido")
     @Column(name = "PRO_ATIVO", nullable = false)
@@ -70,17 +72,14 @@ public class Produto implements Serializable {
     @Column(name = "PRO_DATA_CADASTRO", nullable = false, length = 10)
     private LocalDateTime proDataCadastro;
 
-    @NotBlank(message = "Data de atualização é obrigatório")
-    @Size(max = 10, message = "Data de atualização iválido, deve ter no máximo 10 caracteres")
-    @Column(name = "PRO_DATA_ATUALIZACAO", nullable = false, length = 10)
-    private LocalDateTime proDataAtualizacao;
-
     public Produto() {
     }
 
-    // Construtor com todos os atributos pode ser adicionado aqui se necessário
-    public Produto(Long proId, String proNome, String proDescricao, BigDecimal proPrecoCusto, BigDecimal proPrecoVenda, Integer proQuantidadeEstoque, String proCategoria, String proCodigoBarras, String proMarca, String proUnidadeMedida, String proAtivo, LocalDateTime proDataCadastro, LocalDateTime proDataAtualizacao) {
+    //construtor com todos os atributos pode ser adicionado aqui se necessário
+
+    public Produto(Long proId, Fornecedor fornecedor, String proNome, String proDescricao, BigDecimal proPrecoCusto, BigDecimal proPrecoVenda, Integer proQuantidadeEstoque, String proCategoria, String proCodigoBarras, String proMarca, String proAtivo, LocalDateTime proDataCadastro) {
         this.proId = proId;
+        this.fornecedor = fornecedor;
         this.proNome = proNome;
         this.proDescricao = proDescricao;
         this.proPrecoCusto = proPrecoCusto;
@@ -89,19 +88,25 @@ public class Produto implements Serializable {
         this.proCategoria = proCategoria;
         this.proCodigoBarras = proCodigoBarras;
         this.proMarca = proMarca;
-        this.proUnidadeMedida = proUnidadeMedida;
         this.proAtivo = proAtivo;
         this.proDataCadastro = proDataCadastro;
-        this.proDataAtualizacao = proDataAtualizacao;
     }
-    // Getters e Setters
 
+    //getters e setters
     public Long getProId() {
         return proId;
     }
 
     public void setProId(Long proId) {
         this.proId = proId;
+    }
+
+    public Fornecedor getFornecedor() {
+        return fornecedor;
+    }
+
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
     }
 
     public String getProNome() {
@@ -168,14 +173,6 @@ public class Produto implements Serializable {
         this.proMarca = proMarca;
     }
 
-    public String getProUnidadeMedida() {
-        return proUnidadeMedida;
-    }
-
-    public void setProUnidadeMedida(String proUnidadeMedida) {
-        this.proUnidadeMedida = proUnidadeMedida;
-    }
-
     public String getProAtivo() {
         return proAtivo;
     }
@@ -190,13 +187,5 @@ public class Produto implements Serializable {
 
     public void setProDataCadastro(LocalDateTime proDataCadastro) {
         this.proDataCadastro = proDataCadastro;
-    }
-
-    public LocalDateTime getProDataAtualizacao() {
-        return proDataAtualizacao;
-    }
-
-    public void setProDataAtualizacao(LocalDateTime proDataAtualizacao) {
-        this.proDataAtualizacao = proDataAtualizacao;
     }
 }

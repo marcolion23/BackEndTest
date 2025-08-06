@@ -1,10 +1,7 @@
 package org.example.resources;
 
-import org.example.Dto.ClienteDto;
-import org.example.Dto.FornecedorDto;
-import org.example.entities.Cliente;
+import org.example.dto.FornecedorDto;
 import org.example.entities.Fornecedor;
-import org.example.service.ClienteService;
 import org.example.service.FornecedorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

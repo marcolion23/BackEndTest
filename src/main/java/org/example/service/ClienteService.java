@@ -1,6 +1,6 @@
 package org.example.service;
 
-import org.example.Dto.ClienteDto;
+import org.example.dto.ClienteDto;
 import org.example.entities.Cliente;
 import org.example.entities.Contato;
 import org.example.entities.Endereco;
@@ -52,6 +52,7 @@ public class ClienteService {
             // Atualiza os dados do cliente
             entity.setCliNome(objDto.getCliNome());
             entity.setCliCpf(objDto.getCliCpf());
+            entity.setCliDataNascimento(objDto.getCliDataNascimento());
 
             // Atualiza o endereço do cliente (assumindo que há apenas um)
             if (entity.getEnderecos().isEmpty()) {
@@ -61,6 +62,7 @@ public class ClienteService {
             Endereco endereco = entity.getEnderecos().get(0);
             endereco.setEndRua(objDto.getEndRua());
             endereco.setEndNumero(objDto.getEndNumero());
+            endereco.setEndBairro(objDto.getEndBairro());
             endereco.setEndCidade(objDto.getEndCidade());
             endereco.setEndCep(objDto.getEndCep());
             endereco.setEndEstado(objDto.getEndEstado());
@@ -72,7 +74,6 @@ public class ClienteService {
 
             Contato contato = entity.getContatos().get(0);
             contato.setConCelular(objDto.getConCelular());
-            contato.setConTelefoneComercial(objDto.getConTelefoneComercial());
             contato.setConEmail(objDto.getConEmail());
 
             // Salva as alterações
@@ -92,13 +93,30 @@ public class ClienteService {
     }
 
     public Cliente fromDTO(ClienteDto objDto) {
-        Cliente cliente = new Cliente(null, objDto.getCliNome(), objDto.getCliCpf());
+        Cliente cliente = new Cliente(
+                null,
+                objDto.getCliNome(),
+                objDto.getCliCpf(),
+                objDto.getCliDataNascimento()
+        );
 
-        Endereco endereco = new Endereco(null, cliente, objDto.getEndRua(), objDto.getEndNumero(),
-                objDto.getEndCidade(), objDto.getEndCep(), objDto.getEndEstado());
+        Endereco endereco = new Endereco(
+                null,
+                cliente,
+                objDto.getEndRua(),
+                objDto.getEndNumero(),
+                objDto.getEndBairro(),
+                objDto.getEndCidade(),
+                objDto.getEndCep(),
+                objDto.getEndEstado()
+        );
 
-        Contato contato = new Contato(null, cliente, objDto.getConCelular(),
-                objDto.getConTelefoneComercial(), objDto.getConEmail());
+        Contato contato = new Contato(
+                null,
+                cliente,
+                objDto.getConCelular(),
+                objDto.getConEmail()
+        );
 
         cliente.getEnderecos().add(endereco);
         cliente.getContatos().add(contato);
@@ -113,12 +131,14 @@ public class ClienteService {
         dto.setCliId(obj.getCliId());
         dto.setCliNome(obj.getCliNome());
         dto.setCliCpf(obj.getCliCpf());
+        dto.setCliDataNascimento(obj.getCliDataNascimento());
 
         // Atributos de endereço (assumindo que há pelo menos um)
         if (!obj.getEnderecos().isEmpty()) {
             Endereco endereco = obj.getEnderecos().get(0);
             dto.setEndRua(endereco.getEndRua());
             dto.setEndNumero(endereco.getEndNumero());
+            dto.setEndBairro(endereco.getEndBairro());
             dto.setEndCidade(endereco.getEndCidade());
             dto.setEndCep(endereco.getEndCep());
             dto.setEndEstado(endereco.getEndEstado());
@@ -128,10 +148,8 @@ public class ClienteService {
         if (!obj.getContatos().isEmpty()) {
             Contato contato = obj.getContatos().get(0);
             dto.setConCelular(contato.getConCelular());
-            dto.setConTelefoneComercial(contato.getConTelefoneComercial());
             dto.setConEmail(contato.getConEmail());
         }
-
         return dto;
     }
 }

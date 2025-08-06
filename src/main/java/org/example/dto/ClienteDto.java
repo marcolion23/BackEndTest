@@ -1,34 +1,33 @@
-package org.example.Dto;
-
+package org.example.dto;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import java.time.LocalDate;
+
 public class ClienteDto {
-    //cliente
+
+    // cliente
     private Long cliId;
     private String cliNome;
     @CPF
     private String cliCpf;
+    private LocalDate cliDataNascimento; // novo campo
 
-    //endereco
+    // endereco
     private String endRua;
     private String endNumero;
+    private String endBairro;
     private String endCidade;
     private String endCep;
     private String endEstado;
 
-    //contato
+    // contato
     private String conCelular;
-    private String conTelefoneComercial;
     private String conEmail;
-
-    //construtor
-
 
     public ClienteDto() {
     }
 
-    //gatters e setters
     public Long getCliId() {
         return cliId;
     }
@@ -53,6 +52,14 @@ public class ClienteDto {
         this.cliCpf = cliCpf;
     }
 
+    public LocalDate getCliDataNascimento() {
+        return cliDataNascimento;
+    }
+
+    public void setCliDataNascimento(LocalDate cliDataNascimento) {
+        this.cliDataNascimento = cliDataNascimento;
+    }
+
     public String getEndRua() {
         return endRua;
     }
@@ -67,6 +74,14 @@ public class ClienteDto {
 
     public void setEndNumero(String endNumero) {
         this.endNumero = endNumero;
+    }
+
+    public String getEndBairro() {
+        return endBairro;
+    }
+
+    public void setEndBairro(String endBairro) {
+        this.endBairro = endBairro;
     }
 
     public String getEndCidade() {
@@ -99,14 +114,6 @@ public class ClienteDto {
 
     public void setConCelular(String conCelular) {
         this.conCelular = conCelular;
-    }
-
-    public String getConTelefoneComercial() {
-        return conTelefoneComercial;
-    }
-
-    public void setConTelefoneComercial(String conTelefoneComercial) {
-        this.conTelefoneComercial = conTelefoneComercial;
     }
 
     public String getConEmail() {

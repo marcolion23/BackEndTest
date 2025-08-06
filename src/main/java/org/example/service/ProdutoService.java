@@ -1,6 +1,8 @@
 package org.example.service;
 
+import org.example.entities.Fornecedor;
 import org.example.entities.Produto;
+import org.example.repositories.FornecedorRepository;
 import org.example.repositories.ProdutoRepository;
 import org.example.service.exeption.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +17,28 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository repository;
 
+    @Autowired
+    private FornecedorRepository fornecedorRepository;
+
     public List<Produto> getAll() {
         return repository.findAll();
+    }
+
+    public void reduzirEstoque(Long produtoId, Integer quantidade) {
+        Produto produto = repository.findById(produtoId)
+                .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado"));
+
+        Integer estoqueAtual = produto.getProQuantidadeEstoque();
+        if (estoqueAtual == null) {
+            throw new IllegalStateException("Estoque do produto está nulo (produtoId = " + produtoId + ")");
+        }
+
+        if (quantidade > estoqueAtual) {
+            throw new IllegalArgumentException("Estoque insuficiente para o produtoId = " + produtoId);
+        }
+
+        produto.setProQuantidadeEstoque(estoqueAtual - quantidade);
+        repository.save(produto);
     }
 
     public Produto findById(Long id) {
@@ -24,26 +46,27 @@ public class ProdutoService {
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public Produto insert(Produto produto) {
-        return repository.save(produto);
+    public Produto insert( Long forId,Produto obj) {
+        Fornecedor fornecedor = fornecedorRepository.findById(forId)
+                .orElseThrow(() -> new RuntimeException("Fornecedor não encontrado com ID: "+forId));
+        obj.setFornecedor(fornecedor);
+        return repository.save(obj);
     }
-
-    public boolean update(Long id, Produto produto) {
+    public boolean update(Long id, Produto obj) {
         Optional<Produto> optionalProduto = repository.findById(id);
         if (optionalProduto.isPresent()) {
             Produto produtoSistema = optionalProduto.get();
-            produtoSistema.setProNome(produto.getProNome());
-            produtoSistema.setProDescricao(produto.getProDescricao());
-            produtoSistema.setProPrecoCusto(produto.getProPrecoCusto());
-            produtoSistema.setProPrecoVenda(produto.getProPrecoVenda());
-            produtoSistema.setProQuantidadeEstoque(produto.getProQuantidadeEstoque());
-            produtoSistema.setProCategoria(produto.getProCategoria());
-            produtoSistema.setProCodigoBarras(produto.getProCodigoBarras());
-            produtoSistema.setProMarca(produto.getProMarca());
-            produtoSistema.setProUnidadeMedida(produto.getProUnidadeMedida());
-            produtoSistema.setProAtivo(produto.getProAtivo());
-            produtoSistema.setProDataCadastro(produto.getProDataCadastro());
-            produtoSistema.setProDataCadastro(produto.getProDataCadastro());
+            produtoSistema.setProNome(obj.getProNome());
+            produtoSistema.setProPrecoCusto(obj.getProPrecoCusto());
+            produtoSistema.setProPrecoVenda(obj.getProPrecoVenda());
+            produtoSistema.setProQuantidadeEstoque(obj.getProQuantidadeEstoque());
+            produtoSistema.setProDescricao(obj.getProDescricao());
+            produtoSistema.setProCodigoBarras(obj.getProCodigoBarras());
+            produtoSistema.setProAtivo(obj.getProAtivo());
+            produtoSistema.setProMarca(obj.getProMarca());
+            produtoSistema.setProDataCadastro(obj.getProDataCadastro());
+            produtoSistema.setProCategoria(obj.getProCategoria());
+
             repository.save(produtoSistema);
             return true;
         }
@@ -55,7 +78,12 @@ public class ProdutoService {
     }
 
     //aviso caso o produto estiiver abaixo do numero escolido
-    //public long contarProdutosComEstoqueBaixo() {
-    //return repository.countByProQuantidadeEstoqueLessThan(5);
-    //}
+    public long contarProdutosComEstoqueBaixo() {
+        return repository.countByProQuantidadeEstoqueLessThan(5);
+    }
+
+    //lista para os produtos com estoque baixo
+    public List<Produto> findProdutosComEstoqueBaixo(int limite) {
+        return repository.findByProQuantidadeEstoqueLessThan(limite);
+    }
 }

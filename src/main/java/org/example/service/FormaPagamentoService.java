@@ -29,20 +29,19 @@ public class FormaPagamentoService {
     }
 
     public boolean update(Long id, FormaPagamento formaPagamento) {
-        Optional<FormaPagamento> optionalFormaPagamento = repository.findById(id);
-        if (optionalFormaPagamento.isPresent()) {
-            FormaPagamento formaPagamentoSistema = optionalFormaPagamento.get();
+        Optional<FormaPagamento>optional=repository.findById(id);
+        if (optional.isPresent()){
+            FormaPagamento formaPagamentoSistema = optional.get();
+            formaPagamentoSistema.setFpgTipo(formaPagamento.getFpgTipo());
             formaPagamentoSistema.setFpgDescricao(formaPagamento.getFpgDescricao());
-            formaPagamentoSistema.setFpgAtivo(formaPagamento.getFpgAtivo());
+            formaPagamentoSistema.setFpgNumMaxParcelas(formaPagamento.getFpgNumMaxParcelas());
             formaPagamentoSistema.setFpgPermiteParcelamento(formaPagamento.getFpgPermiteParcelamento());
-            formaPagamentoSistema.setFpgNumeroMaximoParcelas(formaPagamento.getFpgNumeroMaximoParcelas());
             formaPagamentoSistema.setFpgTaxaAdicional(formaPagamento.getFpgTaxaAdicional());
             repository.save(formaPagamentoSistema);
             return true;
         }
         return false;
     }
-
     public void delete(Long id) {
         repository.deleteById(id);
     }

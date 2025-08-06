@@ -1,4 +1,4 @@
-package org.example.Dto;
+package org.example.dto;
 
 public class FornecedorDto {
 
@@ -10,13 +10,13 @@ public class FornecedorDto {
     //endereco
     private String endRua;
     private String endNumero;
+    private String endBairro;
     private String endCidade;
     private String endCep;
     private String endEstado;
 
     //contato
     private String conCelular;
-    private String conTelefoneComercial;
     private String conEmail;
 
     //construtor
@@ -24,6 +24,7 @@ public class FornecedorDto {
     }
 
     //getters e setter
+
     public Long getForId() {
         return forId;
     }
@@ -72,6 +73,14 @@ public class FornecedorDto {
         this.endNumero = endNumero;
     }
 
+    public String getEndBairro() {
+        return endBairro;
+    }
+
+    public void setEndBairro(String endBairro) {
+        this.endBairro = endBairro;
+    }
+
     public String getEndCidade() {
         return endCidade;
     }
@@ -102,14 +111,6 @@ public class FornecedorDto {
 
     public void setConCelular(String conCelular) {
         this.conCelular = conCelular;
-    }
-
-    public String getConTelefoneComercial() {
-        return conTelefoneComercial;
-    }
-
-    public void setConTelefoneComercial(String conTelefoneComercial) {
-        this.conTelefoneComercial = conTelefoneComercial;
     }
 
     public String getConEmail() {

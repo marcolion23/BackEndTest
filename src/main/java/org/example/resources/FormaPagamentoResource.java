@@ -14,7 +14,6 @@ import java.util.List;
 @RequestMapping(value = "/formaPagamentos")
 public class FormaPagamentoResource {
 
-
     @Autowired
     private FormaPagamentoService formaPagamentoService;
 
@@ -23,7 +22,6 @@ public class FormaPagamentoResource {
         List<FormaPagamento> funcoes = formaPagamentoService.getAll();
         return ResponseEntity.ok(funcoes);
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<FormaPagamento> findById(@PathVariable Long id) {
@@ -51,5 +49,4 @@ public class FormaPagamentoResource {
         formaPagamentoService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
 }

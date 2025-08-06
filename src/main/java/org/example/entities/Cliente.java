@@ -1,15 +1,15 @@
 package org.example.entities;
 
-
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 public class Cliente implements Serializable {
@@ -32,18 +32,21 @@ public class Cliente implements Serializable {
 
     @NotBlank(message = "CPF é obrigatório")
     @CPF(message = "CPF inválido")
-    @Column(name = "CLI_CPF", length = 11, nullable = false)
+    @Column(name = "CLI_CPF", length = 20, nullable = false)
     private String cliCpf;
 
+    @NotNull(message = "Data de nascimento é obrigatória")
+    @Column(name = "CLI_DATA_NASCIMENTO", nullable = false)
+    private LocalDate cliDataNascimento;
 
     public Cliente() {
     }
 
-    public Cliente(Long cliId, String cliNome, String cliCpf) {
+    public Cliente(Long cliId, String cliNome, String cliCpf, LocalDate cliDataNascimento) {
         this.cliId = cliId;
         this.cliNome = cliNome;
         this.cliCpf = cliCpf;
-
+        this.cliDataNascimento = cliDataNascimento;
     }
 
     public Long getCliId() {
@@ -70,6 +73,13 @@ public class Cliente implements Serializable {
         this.cliCpf = cliCpf;
     }
 
+    public LocalDate getCliDataNascimento() {
+        return cliDataNascimento;
+    }
+
+    public void setCliDataNascimento(LocalDate cliDataNascimento) {
+        this.cliDataNascimento = cliDataNascimento;
+    }
 
     public List<Endereco> getEnderecos() {
         return enderecos;
