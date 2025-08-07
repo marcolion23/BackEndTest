@@ -15,7 +15,6 @@ public class ProdutoDto {
     private String proCategoria;
     private String proCodigoBarras;
     private String proMarca;
-    private String proAtivo;
     private LocalDateTime proDataCadastro;
     private Long forId;
 
@@ -92,14 +91,6 @@ public class ProdutoDto {
 
     public void setProMarca(String proMarca) {
         this.proMarca = proMarca;
-    }
-
-    public String getProAtivo() {
-        return proAtivo;
-    }
-
-    public void setProAtivo(String proAtivo) {
-        this.proAtivo = proAtivo;
     }
 
     public LocalDateTime getProDataCadastro() {

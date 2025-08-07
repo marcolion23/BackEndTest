@@ -62,11 +62,6 @@ public class Produto implements Serializable {
     @Column(name = "PRO_MARCA", nullable = false, length = 100)
     private String proMarca;
 
-    @NotBlank(message = "obrigatório")
-    @Size(message = "Inválido")
-    @Column(name = "PRO_ATIVO", nullable = false)
-    private String proAtivo;
-
     @NotBlank(message = "Data de cadastro é obrigatório")
     @Size(max = 10, message = "Data de cadastro inválido, deve ter no máximo 10 caracteres")
     @Column(name = "PRO_DATA_CADASTRO", nullable = false, length = 10)
@@ -77,7 +72,7 @@ public class Produto implements Serializable {
 
     //construtor com todos os atributos pode ser adicionado aqui se necessário
 
-    public Produto(Long proId, Fornecedor fornecedor, String proNome, String proDescricao, BigDecimal proPrecoCusto, BigDecimal proPrecoVenda, Integer proQuantidadeEstoque, String proCategoria, String proCodigoBarras, String proMarca, String proAtivo, LocalDateTime proDataCadastro) {
+    public Produto(Long proId, Fornecedor fornecedor, String proNome, String proDescricao, BigDecimal proPrecoCusto, BigDecimal proPrecoVenda, Integer proQuantidadeEstoque, String proCategoria, String proCodigoBarras, String proMarca, LocalDateTime proDataCadastro) {
         this.proId = proId;
         this.fornecedor = fornecedor;
         this.proNome = proNome;
@@ -88,7 +83,6 @@ public class Produto implements Serializable {
         this.proCategoria = proCategoria;
         this.proCodigoBarras = proCodigoBarras;
         this.proMarca = proMarca;
-        this.proAtivo = proAtivo;
         this.proDataCadastro = proDataCadastro;
     }
 
@@ -171,14 +165,6 @@ public class Produto implements Serializable {
 
     public void setProMarca(String proMarca) {
         this.proMarca = proMarca;
-    }
-
-    public String getProAtivo() {
-        return proAtivo;
-    }
-
-    public void setProAtivo(String proAtivo) {
-        this.proAtivo = proAtivo;
     }
 
     public LocalDateTime getProDataCadastro() {

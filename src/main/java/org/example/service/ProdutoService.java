@@ -62,7 +62,6 @@ public class ProdutoService {
             produtoSistema.setProQuantidadeEstoque(obj.getProQuantidadeEstoque());
             produtoSistema.setProDescricao(obj.getProDescricao());
             produtoSistema.setProCodigoBarras(obj.getProCodigoBarras());
-            produtoSistema.setProAtivo(obj.getProAtivo());
             produtoSistema.setProMarca(obj.getProMarca());
             produtoSistema.setProDataCadastro(obj.getProDataCadastro());
             produtoSistema.setProCategoria(obj.getProCategoria());
